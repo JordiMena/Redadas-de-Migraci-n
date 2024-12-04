@@ -1,0 +1,41 @@
+{
+  "Files": [
+    {
+      "Id": "C:\\web\\GestionDeRedadas\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\GestionDeRedadas.bundle.scp.css",
+      "PackagePath": "staticwebassets\\GestionDeRedadas.bundle.scp.css"
+    },
+    {
+      "Id": "C:\\web\\GestionDeRedadas\\wwwroot\\app.css",
+      "PackagePath": "staticwebassets\\app.css"
+    },
+    {
+      "Id": "C:\\web\\GestionDeRedadas\\wwwroot\\bootstrap\\bootstrap.min.css",
+      "PackagePath": "staticwebassets\\bootstrap\\bootstrap.min.css"
+    },
+    {
+      "Id": "C:\\web\\GestionDeRedadas\\wwwroot\\bootstrap\\bootstrap.min.css.map",
+      "PackagePath": "staticwebassets\\bootstrap\\bootstrap.min.css.map"
+    },
+    {
+      "Id": "C:\\web\\GestionDeRedadas\\wwwroot\\favicon.png",
+      "PackagePath": "staticwebassets\\favicon.png"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.GestionDeRedadas.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.build.GestionDeRedadas.props",
+      "PackagePath": "build\\GestionDeRedadas.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildMultiTargeting.GestionDeRedadas.props",
+      "PackagePath": "buildMultiTargeting\\GestionDeRedadas.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildTransitive.GestionDeRedadas.props",
+      "PackagePath": "buildTransitive\\GestionDeRedadas.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

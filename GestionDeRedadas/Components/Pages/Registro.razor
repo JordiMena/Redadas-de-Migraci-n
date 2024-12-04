@@ -1,0 +1,110 @@
+@page "/registro"
+@page "/registro/{id}"
+@inject NavigationManager NavMan
+@rendermode InteractiveServer
+@using System.Text.Json
+@inject IJSRuntime JSx
+
+<h3>@(id == null ? "Agregar Detenido" : "Editar Detenido")</h3>
+
+<EditForm Model="@redada" OnValidSubmit="@GuardarRedada" OnInvalidSubmit="@HandleInvalidSubmit">
+    <DataAnnotationsValidator/>
+    <ValidationSummary/>
+
+    <div class="mb-3">
+        <label for="nombre" class="form-label">Nombre</label>
+        <InputText id="nombre" class="form-control" @bind-Value="@redada.Nombre"></InputText>
+        <ValidationMessage For="@(() => redada.Nombre)" />
+    </div>
+
+    <div class="mb-3">
+        <label for="apellido" class="form-label">Apellido</label>
+        <InputText id="apellido" class="form-control" @bind-Value="@redada.Apellido"></InputText>
+        <ValidationMessage For="@(() => redada.Apellido)" />
+    </div>
+
+    <div class="mb-3">
+        <label for="motivo" class="form-label">Motivo</label>
+        <InputTextArea id="motivo" class="form-control" @bind-Value="@redada.Motivo"></InputTextArea>
+        <ValidationMessage For="@(() => redada.Motivo)" />
+    </div>
+
+    <div class="mb-3">
+        <label for="fechadetencion" class="form-label">Fecha Detención</label>
+        <InputDate id="fechadetencion" class="form-control" @bind-Value="@redada.FechaDetencion"></InputDate>
+        <ValidationMessage For="@(() => redada.FechaDetencion)" />
+    </div>
+
+    <div class="text-center">
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <button type="button" class="btn btn-secondary" @onclick="Cancelar">Cancelar</button>
+        <button type="button" class="btn btn-danger" @onclick="LimpiarRedada">Limpiar</button>
+    </div>
+</EditForm>
+
+@code {
+    [Parameter]
+    public string? id { get; set; } = null;
+
+    private Redadas redada = new();
+    private List<Redadas> redadas = new();
+
+    private async Task GuardarRedada()
+    {
+        if (string.IsNullOrEmpty(redada.Id))
+        {
+            redada.Id = Guid.NewGuid().ToString();
+            redadas.Add(redada);
+        }
+        else
+        {
+            var index = redadas.FindIndex(r => r.Id == redada.Id);
+            if (index >= 0)
+            {
+                redadas[index] = redada;
+            }
+        }
+
+        await JSx.InvokeVoidAsync("localStorage.setItem", "redadas", JsonSerializer.Serialize(redadas));
+        NavMan.NavigateTo("index");
+    }
+
+    private void LimpiarRedada()
+    {
+        redada = new Redadas();
+    }
+
+    private void Cancelar()
+    {
+        NavMan.NavigateTo("index");
+    }
+
+    private void HandleInvalidSubmit()
+    {
+        JSx.InvokeVoidAsync("alert", "El formulario contiene errores.");
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            var redadasJson = await JSx.InvokeAsync<string>("localStorage.getItem", "redadas");
+
+            if (redadasJson != null)
+            {
+                redadas = JsonSerializer.Deserialize<List<Redadas>>(redadasJson);
+            }
+
+            if (id != null)
+            {
+                var existente = redadas.FirstOrDefault(r => r.Id == id);
+                if (existente != null)
+                {
+                    redada = existente;
+                }
+            }
+
+            StateHasChanged();
+        }
+    }
+}
